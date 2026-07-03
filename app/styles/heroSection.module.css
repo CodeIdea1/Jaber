@@ -1,0 +1,164 @@
+/* ── Light Streak Wrapper ── */
+.sunray {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Primary streak — soft wide glow ── */
+.beam1 {
+  position: absolute;
+  top: 14%;
+  left: -10%;
+  width: 65%;
+  height: 28%;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 200, 150, 0.95) 0%,
+    rgba(255, 200, 150, 0.95) 25%,
+    rgba(255, 200, 150, 0.5)  55%,
+    rgba(255, 200, 150, 0.15) 78%,
+    rgba(255, 200, 150, 0)    100%
+  );
+  transform: skewY(13deg);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  opacity: 0.2 !important;
+  animation: lightStreak1 5.5s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
+}
+
+/* ── Secondary streak — sharp bright core ── */
+.beam2 {
+  position: absolute;
+  top: 21.5%;
+  left: -5%;
+  width: 50%;
+  height: 12%;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 220, 170, 1)    0%,
+    rgba(255, 220, 170, 1)    22%,
+    rgba(255, 210, 160, 0.6)  50%,
+    rgba(255, 200, 150, 0.15) 75%,
+    rgba(255, 200, 150, 0)    100%
+  );
+  transform: skewY(11deg);
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  opacity: 0.4 !important;
+  animation: lightStreak1 5s cubic-bezier(0.19, 1, 0.22, 1) 0s forwards;
+}
+
+@keyframes lightStreak1 {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 100%, rgba(40, 5, 5, 0.95) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 30% 60%, rgba(180, 60, 10, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 70% 60%, rgba(160, 30, 5, 0.12) 0%, transparent 60%),
+    linear-gradient(180deg, #000000 0%, #0d0500 40%, #120300 70%, #0a0200 100%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 30% 20% at 50% 0%, rgba(200, 80, 10, 0.08) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 40%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(220, 60, 10, 0.3) 0%, rgba(180, 30, 5, 0.15) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heroImage {
+  object-fit: contain;
+  object-position: bottom;
+  width: 750px !important;
+  height: 870px !important;
+  position: relative;
+  z-index: 2;
+}
+
+
+
+
+/* ── Brand Text Wrapper ── */
+.brandTextWrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.brandText {
+  display: flex;
+  gap: 0;
+}
+
+.brandSvg {
+  width: clamp(320px, 95vw, 1200px);
+  height: clamp(80px, 22vw, 280px);
+  overflow: visible;
+}
+
+/* الحرف: بوردر فقط، يترسم بالتدريج ببطء، كلهم مع بعض */
+.letterPath {
+  font-family: "RuthClair", serif;
+  font-weight: 400;
+  font-size: 175px;
+  letter-spacing: 2px;
+
+  fill: url(#brandGradFill);
+  fill-opacity: 0;
+  stroke: url(#brandGrad);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  stroke-dasharray: 9999;
+  stroke-dashoffset: 9999;
+
+  filter: drop-shadow(0 0 6px rgba(210, 140, 80, 0.55))
+          drop-shadow(0 0 18px rgba(180, 80, 20, 0.3));
+
+  animation:
+    drawStroke  11s cubic-bezier(0.45, 0, 0.25, 1) 0s forwards,
+    fadeInFill  2.5s ease-in                        1s forwards;
+}
+
+@keyframes drawStroke {
+  from { stroke-dashoffset: 9999; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeInFill {
+  from { fill-opacity: 0; }
+  to   { fill-opacity: 1; }
+}
