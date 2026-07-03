@@ -91,8 +91,8 @@ function transformAndNormalise(pts: Pt[]): Pt[] {
   // Offset Y downward so the logo sits near the bottom-centre of the screen.
   const LOGO_Y_OFFSET = -0.75;
   return tx.map(([x,y]): Pt => [
-     ((x-minX)/range*2 - rangeX/range) * 0.18,
-    -((y-minY)/range*2 - rangeY/range) * 0.23 + LOGO_Y_OFFSET,
+     ((x-minX)/range*2 - rangeX/range) * 0.11,
+    -((y-minY)/range*2 - rangeY/range) * 0.14 + LOGO_Y_OFFSET,
   ]);
 }
 

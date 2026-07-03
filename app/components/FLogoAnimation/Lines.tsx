@@ -76,10 +76,10 @@ const fragmentShader = /* glsl */`
     // Phase 3 [0.88→0.92]: lines stay white, mesh not yet visible (pause)
     // Phase 4 [0.92→1.00]: mesh fades in, lines fade out
 
-    // Colour: orange-red → #D2C0B1 warm light  (0.72 → 0.88)
+    // Colour: warm parchment → golden bronze  (0.72 → 0.88)
     float toFinal = smooth01(remap(uProgress, 0.72, 0.88));
-    vec3 drawColA = vec3(0.90, 0.15, 0.02);
-    vec3 drawColB = vec3(1.00, 0.45, 0.03);
+    vec3 drawColA = vec3(0.537, 0.408, 0.298); // #896858 — warm brown
+    vec3 drawColB = vec3(0.784, 0.608, 0.431); // #C89B6E — golden bronze
     vec3 orangeCol = mix(drawColA, drawColB, vVertexT);
     vec3 finalCol  = vec3(0.824, 0.753, 0.694); // #D2C0B1
     vec3 col = mix(orangeCol, finalCol, toFinal);
@@ -122,10 +122,10 @@ function buildGeometry(strokes: Stroke[]): THREE.BufferGeometry {
   // Each stroke's start X is spread slightly so they enter as a tight
   // left-to-right ordered bundle (first stroke enters leftmost).
 
-  const START_X_BASE   = -2.20;  // off-screen left (all lines start here)
+  const START_X_BASE   = -2.6;  // off-screen left (all lines start here)
   const START_X_SPREAD =  0.10;  // tiny spread so order is preserved
-  const START_Y_TOP    =  2.50;  // above screen top
-  const LINE_LEN       =  5.00;  // long enough to span full screen
+  const START_Y_TOP    =  1.40;  // just above screen top (shorter entry)
+  const LINE_LEN       =  0.66;  // short lines at start
 
   let vi = 0;
 

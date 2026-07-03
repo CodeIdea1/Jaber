@@ -3,11 +3,19 @@
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 10;
+  z-index: 20;
 }
 
 .canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
+  pointer-events: none;
+  clip-path: inset(0 100% 100% 0);
+  animation: revealCanvas 2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+}
+
+@keyframes revealCanvas {
+  from { clip-path: inset(0 100% 100% 0); }
+  to   { clip-path: inset(0 0% 0% 0); }
 }
