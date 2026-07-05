@@ -5,9 +5,9 @@
   justify-content: center;
   align-items: flex-end;
   height: 100vh;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
-  background: linear-gradient(180deg, #0d0c0b 0%, #0a0908 45%, #060605 100%);
+  background: linear-gradient(to left, #9B9B9B 0%, #C8C8C8 100%);
 }
 
 /* beams — z-index: 2 خلف كل شيء */
@@ -16,7 +16,6 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  overflow: hidden;
 }
 
 .beam1 {
@@ -106,6 +105,14 @@
   width: clamp(320px, 95vw, 1200px);
   height: clamp(80px, 22vw, 280px);
   overflow: visible;
+  opacity: 0;
+  transform: translateY(120px);
+  animation: brandReveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) 7s forwards;
+}
+
+@keyframes brandReveal {
+  from { opacity: 0; transform: translateY(120px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .letterPath {
@@ -127,8 +134,8 @@
   filter: drop-shadow(0 0 4px rgba(240, 210, 170, 0.3));
 
   animation:
-    drawStroke 11s cubic-bezier(0.45, 0, 0.25, 1) 0s forwards,
-    fadeInFill 2.5s ease-in 1s forwards;
+    drawStroke 11s cubic-bezier(0.45, 0, 0.25, 1) 7s forwards,
+    fadeInFill 2.5s ease-in 8.5s forwards;
 }
 
 @keyframes drawStroke {
@@ -150,10 +157,8 @@
   height: 100%;
   z-index: 5;
   pointer-events: none;
-  opacity: 0;
-  rotate: -28deg; 
+  rotate: -28deg;
   top: -560px;
-  animation: beamFade 3s ease-in 0.5s forwards;
 }
 
 
@@ -167,7 +172,6 @@
   height: 82%;
   z-index: 3;
   pointer-events: none;
-  overflow: hidden;
 }
 
 .floatImg {
@@ -184,8 +188,8 @@
 .heroImage {
   object-fit: contain;
   object-position: bottom;
-  width: 750px !important;
-  height: 870px !important;
+  width: 750px;
+  height: 870px;
   position: relative;
   z-index: 10;
 }
@@ -205,8 +209,8 @@
 .heroImageAnim {
   object-fit: contain;
   object-position: bottom;
-  width: 750px !important;
-  height: 870px !important;
+  width: 750px;
+  height: 870px;
   display: block;
 }
 
@@ -214,8 +218,8 @@
 .heroImageLight {
   object-fit: contain;
   object-position: bottom;
-  width: 750px !important;
-  height: 870px !important;
+  width: 750px;
+  height: 870px;
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -440,33 +444,38 @@
 
   /* توحيد وتكبير صور jaber — حل نهائي */
   .heroImage {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 130vw !important;
-    height: 115vh !important;
-    object-fit: contain;
-    object-position: bottom;
-  }
-
-  .heroImageAnim,
-  .heroImageLight {
-    width: 130vw !important;
-    height: 115vh !important;
-    object-fit: contain;
-    object-position: bottom;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 160vw !important;
+    height: 130vh !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
   }
 
   .heroImageAnimWrap {
-    width: 130vw;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute !important;
+    bottom: 0 !important;
+    width: 130vw !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .heroImageAnim {
+    width: 130vw !important;
+    height: 115vh !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
   }
 
   .heroImageLight {
-    left: 50%;
-    transform: translateX(-50%);
+    width: 160vw !important;
+    height: 130vh !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
 
   /* تكبير عنوان البراند أكثر */
@@ -486,7 +495,6 @@
     padding: 10px 12px;
     box-sizing: border-box;
     width: 100%;
-    overflow: hidden;
     gap: 0;
   }
 

@@ -47,8 +47,8 @@ const PARTICLES = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
   const perpX = -dirY / len, perpY = dirX / len;
   return {
     id: i,
-    x: baseX + perpX * perpAngleOffset,
-    y: baseY + perpY * perpAngleOffset,
+    x: parseFloat((baseX + perpX * perpAngleOffset).toFixed(2)),
+    y: parseFloat((baseY + perpY * perpAngleOffset).toFixed(2)),
     delay: (i * 0.13) % 6,
     dur: 3 + (i % 8) * 0.4,
     dx: (Math.sin(i * 37.3) * 0.5).toFixed(2),
@@ -68,7 +68,7 @@ export default function HeroSection() {
       gsap.fromTo(
         jaberRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 2.9, ease: "power2.out", delay: 1.5 }
+        { opacity: 1, duration: 2.9, ease: "power2.out", delay: 4.5 }
       );
     }
 
@@ -141,7 +141,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={styles.hero}>
+    <section ref={sectionRef} className={`${styles.hero} bg-transition`}>
       {/* صور طائرة */}
       <div className={styles.floatingZone}>
         {FLOAT_ITEMS.map((item, i) => (
@@ -168,8 +168,8 @@ export default function HeroSection() {
       {/* جسيمات */}
       <svg className={styles.particles} viewBox="0 0 1000 1000" preserveAspectRatio="none">
         {PARTICLES.map((p) => (
-          <circle key={p.id} cx={p.x} cy={p.y} r={p.r} fill="#D6C3AB">
-            <animate attributeName="opacity" values="0;0.85;0" dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite" />
+        <circle key={p.id} cx={p.x} cy={p.y} r={p.r} fill="#D6C3AB">
+            <animate attributeName="opacity" values="0;1;0" dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" />
             <animateTransform attributeName="transform" type="translate" values={`0,0; ${p.dx},${p.dy}; 0,0`} dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite" />
           </circle>
         ))}
@@ -213,18 +213,18 @@ export default function HeroSection() {
       </div>
 
       {/* صورة الأساس */}
-      <img src="/jaber-without-light2.png" alt="Jaber base" className={styles.heroImage} />
+      <img src="/jaber-without-light2.png" alt="Jaber base" className={styles.heroImage} fetchPriority="high" />
 
       {/* jaber.png */}
       <div ref={jaberRef} className={styles.heroImageAnimWrap}>
-        <img src="/jaber.png" alt="Jaber" className={styles.heroImageAnim} />
+        <img src="/jaber.png" alt="Jaber" className={styles.heroImageAnim} fetchPriority="high" />
       </div>
 
       {/* light4 */}
       <Image src="/light4.png" alt="light4" width={420} height={420} className={styles.light4} priority />
 
       {/* jaber-with-light.png */}
-      <img ref={lightRef} src="/jaber-with-light.png" alt="" className={styles.heroImageLight} />
+      <img ref={lightRef} src="/jaber-with-light.png" alt="" className={styles.heroImageLight} fetchPriority="low" />
 
       {/* إحصائيات يمين */}
       <div className={styles.statsPanel}>
