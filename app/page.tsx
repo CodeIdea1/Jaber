@@ -83,9 +83,9 @@ export default function Home() {
             position: "absolute",
             left: "50%",
             top: "50%",
-            transform: "translate(calc(-50% + 2.88vw), calc(-50% - 14vh))",
-            width:  "16vh",
-            height: "32vh",
+            transform: "translate(calc(-50% + 4.5vw), calc(-50% - 7vh))",
+            width:  "12vh",
+            height: "24vh",
             opacity: 0,
             pointerEvents: "none",
           }}

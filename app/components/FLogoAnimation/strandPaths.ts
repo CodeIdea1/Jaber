@@ -13,8 +13,8 @@ export const STRAND_COUNT = 36;
 
 // Raise everything by Y_OFFSET (Fix 3)
 const Y_OFFSET = 0.48;
-const TOP   =  0.60 + Y_OFFSET;
-const BOT   = -0.60 + Y_OFFSET;
+const TOP   =  0.42 + Y_OFFSET;
+const BOT   = -0.42 + Y_OFFSET;
 const BAR_R =  0.40;
 const MID_R =  0.28;
 const MID_Y =  0.08 + Y_OFFSET;

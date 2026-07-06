@@ -99,6 +99,8 @@
   justify-content: center;
   z-index: 4;
   pointer-events: none;
+  font-family: var(--font-orbitron), sans-serif;
+  margin-top: 120px;
 }
 
 .brandSvg {
@@ -116,9 +118,9 @@
 }
 
 .letterPath {
-  font-family: "RuthClair", serif;
+  font-family: "Orbitron", sans-serif;
   font-weight: 400;
-  font-size: 175px;
+  font-size: 140px;
   letter-spacing: 2px;
 
   fill: url(#brandGradFill);
@@ -163,25 +165,25 @@
 
 
 
-/* صور طائرة — خلف الإضاءات */
-.floatingZone {
+/* أيقونات الأدوات */
+.toolIconsRow {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 82%;
-  z-index: 3;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 22;
+  display: flex;
+  gap: 18px;
+  align-items: center;
   pointer-events: none;
 }
 
-.floatImg {
-  position: absolute;
-  bottom: 48%;
+.toolIcon {
+  width: 44px;
+  height: 44px;
   object-fit: contain;
-  opacity: 0;
-  filter: drop-shadow(0 0 6px rgba(246, 212, 170, 0.12));
-  will-change: transform, opacity;
-  mix-blend-mode: screen;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(246, 212, 170, 0.2));
 }
 
 /* صورة الأساس */
@@ -333,11 +335,44 @@
   to   { opacity: 1; }
 }
 
+/* صور سينمائية */
+.cinematicLeftWrap {
+  position: absolute;
+  left:4.8%;
+  top: -40px;
+  z-index: 8;
+  pointer-events: none;
+  width: 49%;
+  perspective: 900px;
+  transform-origin: right center;
+}
+
+.cinematicRightWrap {
+  position: absolute;
+  right: 4.8%;
+  top: -40px;
+  z-index: 8;
+  pointer-events: none;
+  width: 49%;
+  perspective: 900px;
+  transform-origin: left center;
+}
+
+.cinematicImg {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
 /* إحصائيات يمين */
 .statsPanel {
   position: absolute;
   right: 48px;
-  top: 60%;
+  top: 70%;
   transform: translateY(-50%);
   z-index: 22;
   display: flex;
@@ -345,6 +380,7 @@
   align-items: stretch;
   gap: 16px;
   pointer-events: none;
+  scale: .8;
 }
 
 .statsLine {

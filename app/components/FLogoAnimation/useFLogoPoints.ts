@@ -90,9 +90,10 @@ function transformAndNormalise(pts: Pt[]): Pt[] {
   // Negate Y so the logo is right-side-up in Three.js world space.
   // Offset Y downward so the logo sits near the bottom-centre of the screen.
   const LOGO_Y_OFFSET = -0.75;
+  const LOGO_X_OFFSET = 0.06;
   return tx.map(([x,y]): Pt => [
-     ((x-minX)/range*2 - rangeX/range) * 0.11,
-    -((y-minY)/range*2 - rangeY/range) * 0.14 + LOGO_Y_OFFSET,
+     ((x-minX)/range*2 - rangeX/range) * 0.11 + LOGO_X_OFFSET,
+    -((y-minY)/range*2 - rangeY/range) * 0.10 + LOGO_Y_OFFSET,
   ]);
 }
 

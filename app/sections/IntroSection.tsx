@@ -42,7 +42,7 @@ export default function IntroSection({
     };
 
     gsap.to(proxy, {
-      p: 1, s: 0.18, tr: 1,
+      p: 1, s: 0.25, tr: 1,
       duration: 6,
       ease: "power2.inOut",
       onUpdate() {
@@ -55,19 +55,17 @@ export default function IntroSection({
         }
 
         // crossfade ناعم: canvas يخفت، logo يظهر (tr: 0.80 → 1.0)
-        if (proxy.tr > 0.80) {
-          const crossT = (proxy.tr - 0.80) / 0.20; // 0→1
+        if (proxy.tr > 0.88) {
+          const crossT = (proxy.tr - 0.88) / 0.12; // 0→1
           const eased  = crossT < 0.5
             ? 2 * crossT * crossT
             : 1 - Math.pow(-2 * crossT + 2, 2) / 2; // easeInOutQuad
           const canvas = canvasWrapRef.current?.querySelector("canvas");
-          if (canvas) (canvas as HTMLElement).style.opacity = String(1 - eased * 0.9);
+          if (canvas) (canvas as HTMLElement).style.opacity = String(1 - eased);
           if (logoRef.current) {
-            // نطبق نفس الـ scale الحالي للكانفاس على اللوجو
-            const sc = scaleRef.current;
-            logoRef.current.style.opacity   = String(eased);
+            logoRef.current.style.opacity   = String(Math.max(0, (crossT - 0.3) / 0.7));
             logoRef.current.style.transform =
-              `translate(calc(-50% + 2.88vw), calc(-50% - 24.54vh)) scale(${sc})`;
+              `translate(calc(-50% + -0vw), calc(-50% - 5vh))`;
           }
         }
 
@@ -75,7 +73,6 @@ export default function IntroSection({
         applyBg(t);
       },
       onComplete() {
-        // الكانفاس يبقى fixed في مكانه — لا نقل DOM — لا وميض
         if (sectionRef.current) sectionRef.current.style.display = "none";
         window.scrollTo(0, 0);
         onLanded?.();

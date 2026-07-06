@@ -9,7 +9,7 @@ import { BsBehance, BsDribbble } from "react-icons/bs";
 
 const BRAND_WORD = "FRAMELINE";
 
-const FLOATING_IMAGES = [
+/* const FLOATING_IMAGES = [
   { src: "/DaVinci Resolve2.png", id: 0 },
   { src: "/Ae2.png", id: 1 },
   { src: "/pr2.png", id: 2 },
@@ -31,7 +31,7 @@ const FLOAT_ITEMS = Array.from({ length: 18 }, (_, i) => {
     riseY: 280 + (i % 4) * 55,
     entrySkew: dir * 22,
   };
-});
+}); */
 
 const PARTICLE_COUNT = 180;
 
@@ -61,7 +61,38 @@ export default function HeroSection() {
   const lightRef = useRef<HTMLImageElement>(null);
   const jaberRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const floatRefs = useRef<(HTMLImageElement | null)[]>([]);
+  // const floatRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const cinemaLeftRef = useRef<HTMLImageElement>(null);
+  const cinemaRightRef = useRef<HTMLImageElement>(null);
+
+  const handleCinemaTilt = (e: React.MouseEvent<HTMLDivElement>, side: "left" | "right") => {
+    const el = side === "left" ? cinemaLeftRef.current : cinemaRightRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width  - 0.5;
+    const y = (e.clientY - rect.top)  / rect.height - 0.5;
+    const baseRotateY = side === "left" ? 18 : -18;
+    gsap.to(el, {
+      rotateY: baseRotateY + x * 20,
+      rotateX: -y * 14,
+      duration: 0.9,
+      ease: "power1.out",
+      overwrite: true,
+    });
+  };
+
+  const handleCinemaTiltLeave = (side: "left" | "right") => {
+    const el = side === "left" ? cinemaLeftRef.current : cinemaRightRef.current;
+    if (!el) return;
+    const baseRotateY = side === "left" ? 18 : -18;
+    gsap.to(el, {
+      rotateY: baseRotateY,
+      rotateX: 0,
+      duration: 1.2,
+      ease: "elastic.out(1, 0.75)",
+      overwrite: true,
+    });
+  };
 
   useEffect(() => {
     if (jaberRef.current) {
@@ -72,7 +103,7 @@ export default function HeroSection() {
       );
     }
 
-    floatRefs.current.forEach((el, i) => {
+    /* floatRefs.current.forEach((el, i) => {
       if (!el) return;
       const item = FLOAT_ITEMS[i];
       const tl = gsap.timeline({ repeat: -1, delay: item.delay });
@@ -104,7 +135,7 @@ export default function HeroSection() {
           duration: item.dur * 0.48,
           ease: "power1.in",
         });
-    });
+    }); */
 
     const onMove = (e: MouseEvent) => {
       if (!lightRef.current || !sectionRef.current) return;
@@ -132,6 +163,22 @@ export default function HeroSection() {
       });
     };
 
+    // أنيميشن الصور السينمائية بعد 8 ثواني — تنتهي بميلان جانبي
+    if (cinemaLeftRef.current) {
+      gsap.fromTo(
+        cinemaLeftRef.current,
+        { opacity: 0, x: -15, rotateY: 0 },
+        { opacity: 0.45, x: 0, rotateY: 18, duration: 1.4, ease: "power3.out", delay: 8 }
+      );
+    }
+    if (cinemaRightRef.current) {
+      gsap.fromTo(
+        cinemaRightRef.current,
+        { opacity: 0, x: 15, rotateY: 0 },
+        { opacity: 0.45, x: 0, rotateY: -18, duration: 1.4, ease: "power3.out", delay: 8 }
+      );
+    }
+
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mousemove", onLeave);
     return () => {
@@ -143,7 +190,7 @@ export default function HeroSection() {
   return (
     <section ref={sectionRef} className={`${styles.hero} bg-transition`}>
       {/* صور طائرة */}
-      <div className={styles.floatingZone}>
+      {/* <div className={styles.floatingZone}>
         {FLOAT_ITEMS.map((item, i) => (
           <img
             key={item.uid}
@@ -154,7 +201,7 @@ export default function HeroSection() {
             style={{ left: `${item.left}%`, width: item.size, height: item.size }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* حزمة الضوء */}
       <div className={styles.sunray}>
@@ -193,7 +240,7 @@ export default function HeroSection() {
               <stop offset="100%" stopColor="#2C2622" stopOpacity="0.75" />
             </linearGradient>
           </defs>
-          <text x="450" y="160" textAnchor="middle" fontFamily="RuthClair, serif" fontWeight="400" id="brandText" className={styles.letterPath}>
+          <text x="450" y="160" textAnchor="middle" fontFamily="Orbitron, sans-serif" fontWeight="400" id="brandText" className={styles.letterPath}>
             {BRAND_WORD}
           </text>
         </svg>
@@ -210,6 +257,24 @@ export default function HeroSection() {
           <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble"><BsDribbble size={20} /></a>
         </div>
         <p className={styles.footerText}>BASED IN PALESTINE &nbsp;·&nbsp; AVAILABLE WORLDWIDE</p>
+      </div>
+
+      {/* صور سينمائية يمين ويسار */}
+      <div
+        className={styles.cinematicLeftWrap}
+        onMouseMove={e => handleCinemaTilt(e, "left")}
+        onMouseLeave={() => handleCinemaTiltLeave("left")}
+        style={{ pointerEvents: "all" }}
+      >
+        <img ref={cinemaLeftRef} src="/cinematic1.png" alt="cinematic left" className={styles.cinematicImg} />
+      </div>
+      <div
+        className={styles.cinematicRightWrap}
+        onMouseMove={e => handleCinemaTilt(e, "right")}
+        onMouseLeave={() => handleCinemaTiltLeave("right")}
+        style={{ pointerEvents: "all" }}
+      >
+        <img ref={cinemaRightRef} src="/cinematic2.png" alt="cinematic right" className={styles.cinematicImg} />
       </div>
 
       {/* صورة الأساس */}

@@ -24,6 +24,7 @@ export default function AnimationCanvas({
   const internalProgressRef  = useRef<number>(0);
   const internalScaleRef     = useRef<number>(1);
   const internalTranslateRef = useRef<number>(0);
+  const canvasWrapperRef     = useRef<HTMLDivElement>(null);
 
   const progressRef  = externalProgressRef  ?? internalProgressRef;
   const scaleRef     = externalScaleRef     ?? internalScaleRef;
@@ -32,17 +33,12 @@ export default function AnimationCanvas({
   useEffect(() => {
     if (!autoPlay) return;
     const proxy = { p: 0 };
-    // Slow opening twist/descent, fast letter-formation snap
-    // Custom ease: very slow start (cubic), then accelerates sharply into finish
-    // Phase 1: slow twist/coil (0→0.55) over ~10s, Phase 2: fast F-formation (0.55→1) over ~3s
     const tween = gsap.to(proxy, {
       p: 1,
       duration: 22,
       ease: "none",
       onUpdate() {
         const raw = proxy.p;
-        // First 90% of time (~20s) → progress 0..0.62 (slow coil/twist)
-        // Last 10% of time (~2s)   → progress 0.62..1  (fast F snap)
         const bp = 0.90;
         progressRef.current = raw < bp
           ? (raw / bp) * 0.62
@@ -53,6 +49,7 @@ export default function AnimationCanvas({
   }, [autoPlay, progressRef]);
 
   return (
+    <div ref={canvasWrapperRef} style={{ width: "100%", height: "100%" }}>
     <Canvas
       className={styles.canvas}
       camera={{ position: [0, 0, 2.2], fov: 48 }}
@@ -67,5 +64,6 @@ export default function AnimationCanvas({
     >
       <Scene3D progressRef={progressRef} scaleRef={scaleRef} translateRef={translateRef} />
     </Canvas>
+    </div>
   );
 }
